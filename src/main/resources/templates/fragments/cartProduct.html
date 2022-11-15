@@ -1,0 +1,17 @@
+<span th:fragment="cartProduct">
+    <div class="col d-flex d-inline">
+        <form th:action="@{/decrease/{id}(id=${product.id})}" method="post">
+            <button class="btn" type="submit">-</button>
+        </form>
+
+        <h5 id="number" type="number" th:text="${item.quantity}"></h5>
+
+        <form th:action="@{/increase/{id}(id=${product.id})}" method="post">
+            <button class="btn" type="submit">+</button>
+        </form>
+
+        <form th:action="@{/delete/{id}(id=${product.id})}" method="post">
+            <button class="btn bi bi-trash" type="submit"></button>
+        </form>
+    </div>
+</span>

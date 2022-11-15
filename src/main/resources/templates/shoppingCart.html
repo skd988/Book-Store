@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head.html :: head(title='Shopping Cart')">
+
+</head>
+<body>
+    <span th:replace="fragments/customerNav.html :: customerNav"></span>
+
+    <h2 class="text-center">Welcome to your shopping cart!</h2>
+    <h3 class="text-center" th:if="${cart.isEmpty()}">Your cart is empty.</h3>
+
+    <h3 th:if="${payment_failed != null && payment_failed}" class="text-center text-danger">
+        Payment failed, some items in the cart are not in stock.
+    </h3>
+    <span th:if="${!cart.isEmpty()}">
+        <div class="container-fluid d-flex justify-content-center">
+            <div class="card col-sm-9">
+                <div class="card-body row row-cols-md-3 row-cols-sm-4 row-cols-12 g-4">
+                    <span th:each="item : ${cart}">
+                        <span th:replace="fragments/product.html :: product(${productService.findById(item.id).get()})"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row d-flex d-inline col-6 justify-content-center">
+            <p class="text-center" th:text="'The total amount is: ' + ${toPay}"></p>
+            <br>
+            <div class="col-2 m-1">
+                <form th:action="@{/pay}" method="get">
+                    <button class="btn btn-primary" type="submit">Checkout</button>
+                </form>
+            </div>
+            <div class="col-2 m-1">
+                <form th:action="@{/empty}" method="post">
+                    <button class="btn btn-primary" type="submit">Empty cart</button>
+                </form>
+            </div>
+        </div>
+    </span>
+</body>
+</html>

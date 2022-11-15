@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head.html :: head(title='Book Shelf')"></head>
+<body>
+    <span th:replace="fragments/customerNav.html :: customerNav"></span>
+
+    <h3 th:if="${payment_success != null && payment_success}" class="text-center text-success">Payment was successful</h3>
+
+    <h2 class="text-center">Welcome to the BookShelf store!</h2>
+    <div class="container-fluid d-flex justify-content-center">
+        <img class="col-5 img-fluid rounded-circle" th:src="@{/images/books.png}" alt="img missing">
+    </div>
+
+    <br>
+
+    <div th:if="${searchResults != null }" class="container-fluid d-flex justify-content-center">
+        <div class="card col-sm-9">
+            <div class="card-header">
+                <h2>Search Results</h2>
+            </div>
+            <div class="card-body row row-cols-md-3 row-cols-sm-4 row-cols-12 g-4">
+                <div th:each="product : ${searchResults}">
+                    <span th:replace="fragments/product.html :: product(${product})"></span>
+                </div>
+                <h4 th:if="${searchResults.isEmpty()}">No results!</h4>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <div th:if="${!products.isEmpty()}" class="container-fluid justify-content-center d-flex">
+        <div class="card col-sm-9">
+            <div class="card-header">
+                <h1>Books on discount:</h1>
+            </div>
+            <div class="card-body row row-cols-md-3 row-cols-sm-4 row-cols-12 g-4">
+                <div th:each="product : ${products}">
+                    <span th:replace="fragments/product.html :: product(${product})"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

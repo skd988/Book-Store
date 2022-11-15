@@ -1,0 +1,26 @@
+<span th:fragment="product(product)">
+    <div class="col">
+        <div class="card h-100">
+            <img th:src="${product.image}" class="card-img-top" alt="img missing">
+            <div class="card-body">
+                <h5 class="card-title" th:text="${product.name}"></h5>
+                <div th:with="resPrice=(${product.getDiscountedPrice()})">
+                    <p class="card-text d-inline">Price: </p>
+                    <p th:if="${product.price != resPrice}" class="card-text d-inline"><del th:text="${product.price}"></del></p>
+                    <p class="card-text d-inline" th:text="${resPrice}"></p>
+                </div>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted" th:text="'Amount in stock: ' + ${product.quantity}"></small>
+                <div th:if="${isCartDisplayMode == true}">
+                    <span th:replace="fragments/cartProduct.html :: cartProduct"></span>
+                </div>
+                <div th:if="${isCartDisplayMode == false }">
+                    <form th:action="@{/addtocart/{id}(id=${product.id})}" method="post">
+                        <button type="submit" class="btn btn-primary bi bi-bag-plus"> Add</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</span>
